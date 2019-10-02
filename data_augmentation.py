@@ -66,7 +66,7 @@ def masks_please(points, width, height):
         ImageDraw.Draw(img).polygon(f, outline=255, fill=255)
     mask = np.array(img)
     return mask
-#=======================================================================================
+#======================================================================================
 
 def pol_to_dots(poly):
     l = list()
