@@ -14,4 +14,4 @@
 `input-file` - файл типа `JSON` в котором находятся аннотации к городу/городам/всему_датасету   
 
 ### Пример использования
-`python crop_light.py`
+`python crop_light.py --output-folder-test /datasets/DTLD/DTLD_crop/test --output-folder-train /datasets/DTLD/DTLD_crop/train --attitude 0.8 --input-file /datasets/DTLD/JSONS/Bochum_all.json`
