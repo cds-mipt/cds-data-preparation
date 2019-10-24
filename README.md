@@ -10,8 +10,10 @@
 
 `folder-train` - путь папки в которую будет записываться датасет для обучения сетки, если папка не существует, то она будет создана автоматически   
 `folder-test` - путь папки в которую будет записываться датасет для валидации сетки, если папка не существует, то она будет создана автоматически   
-`attitude` - отношение `train` к `train+test` (например: при `attitude=0.8` 80% информации будет в `folder-train`)   
+`attitude` - отношение `train` к `train+test` (например: при `attitude=0.7` 70% информации будет записано в `folder-train`) дефолтное значение `attitude` равняется `0.8` 
 `input-file` - файл типа `JSON` в котором находятся аннотации к городу/городам/всему_датасету   
 
 ### Пример использования
-`python crop_light.py --output-folder-test /datasets/DTLD/DTLD_crop/test --output-folder-train /datasets/DTLD/DTLD_crop/train --attitude 0.8 --input-file /datasets/DTLD/JSONS/Bochum_all.json`
+`python crop_light.py --output-folder-test /datasets/DTLD/DTLD_crop/test --output-folder-train /datasets/DTLD/DTLD_crop/train --attitude 0.9 --input-file /datasets/DTLD/JSONS/Bochum_all.json`
+
+#### Важно! Для корректной работы в JSON файлах должны быть прописаны правильные `path` файлов в аннотациях
