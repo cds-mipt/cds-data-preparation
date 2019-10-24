@@ -40,6 +40,12 @@ pos = [0] * 6
 numb = [0] * 6
 col = [0] * 6
 
+
+def create_dir(folder):
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+
+
 def create_dirs(folders):
     global folder_name
     inner_folders = [5, 5, 5]
@@ -134,32 +140,44 @@ def crop(image, object, filename):
         x, y = np.random.randint(200, 1800), np.random.randint(400, 700)
         #print(x, y, h, w, filename)
         im = light[y:y+h, x:x+w,:]
-        save(im, 555555, object[i]['unique_id'], filename)
+        if im.size != 0:
+            save(im, 555555, object[i]['unique_id'], filename)
+
 
 process = 'train'
 
+def del_please(folder):
+    os.system("rm -rf "+folder+"/lights/0")
+    os.system("rm -rf "+folder+"/position/0")
+    for f in os.listdir(folder):
+        for ff in os.listdir(folder+"/"+f):
+            for imm in os.listdir(folder+"/"+f+"/"+ff+"/"):
+                if os.path.getsize(folder+"/"+f+"/"+ff+"/"+imm) < 1:
+                    os.remove(folder+"/"+f+"/"+ff+"/"+imm)
+
+
 def main(args):
     global folder_name, process, pos, numb, col
+    create_dir(args.output_folder_train)
+    create_dir(args.output_folder_test)
     folder_name = args.output_folder_train
     df = pd.read_json(args.input_file)
     limit = float(args.attitude) * float(df.shape[0])
-    limit = limit / 10
-    for i, row in tqdm(df.iterrows()):
+    for i, row in tqdm(df.iterrows(), total=df.shape[0]):
         if i >= int(limit):
             folder_name = args.output_folder_test
             process = 'test'
             pos = [0] * 6
             numb = [0] * 6
             col = [0] * 6
-            limit = 1000000
-        if i == limit:
-            break
         object = row['objects']
         path = row['path'].replace("/scratch/fs2/", args.input_folder).replace("tiff", "png")
         filename = path
         image = cv2.imread(filename)
         filename = filename[26:].replace("/", "_").split('.')[0]
         crop(image, object, filename)
+    del_please(args.output_folder_train)
+    del_please(args.output_folder_test)
 
 if __name__=="__main__":
     parser = build_parser()
