@@ -54,3 +54,7 @@ https://www.uni-ulm.de/en/in/driveu/projects/driveu-traffic-light-dataset/
 Все ноутбуки используют KERAS    
 Из названия ноутбука можно понять размерность тензора подаваемого на классификатор (200/128/71)   
 Цифра после `xception` в названии файла определяет по какому признаку наша сетка будет классифицировать  
+
+
+## keras2tensorrt-Jetson.ipynb
+Данный ноутбук ковертирует сеть keras `.hdf5` в tensorrt `.pb`
